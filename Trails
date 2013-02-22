@@ -1,0 +1,27 @@
+trails = [[0,0]] * 60
+shape = 0
+Shoes.app do
+  keypress do |k|
+    case k
+      when " "
+        shape += 1
+    end
+  end
+  nostroke
+  fill tomato(0.6) 
+  animate(24) do
+    trails.shift
+    trails << self.mouse[1,2]
+    clear do
+      trails.each_with_index do |(x, y), i|
+        i += 1
+        case shape%2
+        when 0
+          rect :left => x, :top => y, :width => i, :height => i
+        else
+          oval :left => x, :top => y, :radius => i, :center => true
+        end
+      end
+    end
+  end
+end
